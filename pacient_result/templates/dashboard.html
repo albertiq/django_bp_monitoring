@@ -1,0 +1,58 @@
+{% extends "base_generic.html" %}
+{% block content %}
+<style>
+table, td, th {
+  border: 1px solid #A8A8A8;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 15px;
+}
+</style>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Личный кабинет</title>
+
+	<style>
+
+	</style>
+</head>
+
+
+<body>
+
+<table >
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Результат показания</th>
+            <th>Дата</th>
+            <th>Пациент</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for person in datas %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ person.result }}</td>
+            <td>{{ person.date_ad }}</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+
+</body>
+{% endblock %}

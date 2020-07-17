@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  {% block title %}<title>Local Library</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Добавление дополнительного статического CSS файла -->
+<style>
+
+    html,body{
+
+        height: 100%;
+    }
+
+.wrapper {
+	position: relative;
+	min-height: 100%;
+}
+	.footer {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 90px;
+			background: #7abecc !important;
+			text-align: center;
+			line-height:90px;
+
+	}
+    .col-sm-2 {
+
+  background: #74cfbf !important;
+
+  font-family:Open Sans,sans-serif;
+  font-size:14px;
+  box-shadow: 0 0 5px 2px rgba(0,0,0,.1);
+  border-radius:5px;
+
+}
+    .container-fluid {
+
+  background: #E8E8E8 !important;
+
+}
+    .imgCenter {text-align:center;}
+
+    .sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #74cfbf;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 220px;
+  padding-bottom: 90px;
+
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+.headerstat > H3 { text-align: center;
+		     color: #fff;
+    line-height:50px
+    padding: 0;
+    margin: 0 ;
+		}
+
+		.headerstat
+{
+position:fixed;
+top:0;
+width: 100%;
+z-index:1000;
+background-color:#7abecc; height:50px
+}
+.pusto
+{
+height:50px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class = "headerstat">
+			<h3>Система мониторинга артериального давления</h3>
+
+		</div>
+		<div class = "pusto"></div>
+
+<div class="sidebar">
+                <div class="imgCenter">
+<img src="{% static "1231.png" %}" border="0" width="150" height="93" alt="" >
+  </div>
+
+
+
+
+
+
+    <a href="{% url 'dashboard' %}">Главная</a>
+    {% if request.user.groups.all.0.name == "Доктор" %}
+
+    <a href="{% url 'pacients' %}">Список пациентов</a>
+    <a href="{% url 'recomend_create' %}">Составить заключение</a>
+
+    {% endif %}
+    <a href="{% url 'recomends' %}">Заключения</a>
+    <a href=# >Пользователь: {{ request.user.first_name }} {{ request.user.last_name }}</a>
+    <a href=# >Должность: {{ request.user.groups.all.0 }}</a>
+
+     <a href="{% url 'logout' %}">Выйти</a>
+
+
+      </div>
+      <div class="content">
+
+      {% block content %}{% endblock %}
+
+    </div>
+
+
+
+
+<!--<div class="footer"> © Система мониторинга артериального давления</div> -->
+
+</body>
+</html>

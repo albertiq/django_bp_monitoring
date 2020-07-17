@@ -1,0 +1,156 @@
+
+{% extends "base_generic.html" %}
+{% block content %}
+<style>
+.overlay {
+  position: fixed;
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.6);
+  display: none;
+}
+.overlay.active {
+  display: block;
+}
+.overlay .flex-popap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.overlay .flex-popap .popap {
+  position: relative;
+  background-color: #fff;
+  padding: 35px 25px;
+  margin: 0 10px;
+  max-width: 450px;
+  overflow: auto;
+}
+.popap span {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+</style>
+
+<style>
+    table, td, th {
+  border: 1px solid #A8A8A8;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 15px;
+}
+</style>
+<style>
+.demotable {
+  border-collapse: collapse;
+  counter-reset: schetchik;  /* счётчик с названием "schetchik" работает в рамках класса .demotable */
+}
+.demotable tr {
+  counter-increment: schetchik;  /* при встрече тега tr счётчик с названием "schetchik" увеличивается на единицу */
+}
+.demotable td,
+.demotable tr:before {
+  padding: 15px;
+  border: 1px solid #A8A8A8;
+}
+.demotable tr:before {
+  content: counter(schetchik);  /* значение счётчика с названием "schetchik" записывается в первую клетку строки */
+  display: table-cell;
+  vertical-align: middle;
+
+}
+</style>
+
+
+    <h1>Заключения</h1>
+
+
+<table>
+
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Текст заключения</th>
+            <th>Дата</th>
+            <th>Пациент</th>
+
+        </tr>
+    </thead>
+    <tbody class="demotable">
+
+            {% for rec in rec_list %}
+            {% if rec.pacient == request.user %}
+        <tr>
+
+
+
+            <td><a href="#" onclick="show_popap('{{ rec.id }}')">Открыть текст </a></td>
+            <td>{{ rec.date_text }}</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            {% endif %}
+
+            {% if user.groups.all.0.name == "Доктор" %}
+            {% for user in user_list %}
+            {% if rec.pacient_id == user.id %}
+            <td><a href="#" onclick="show_popap('{{ rec.id }}')">Открыть текст </a></td>
+            <td>{{ rec.date_text }}</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+
+        </tr>
+
+     {% endfor %}
+
+    </tbody>
+</table>
+{% for rec in rec_list %}
+        <div class="overlay" id="{{ rec.id }}">
+  <div class="flex-popap">
+    <div class="popap">
+      <span class="close_popap">Закрыть</span>
+        <p>{{ rec.text }}</p>
+
+    </div>
+  </div>
+</div>
+     {% endfor %}
+<script >
+
+
+function show_popap(id_popap) {
+  var id = "#" + id_popap;
+  $(id).addClass('active');
+}
+
+$(".close_popap").click( function(){
+  $(".overlay").removeClass("active");
+});
+
+
+</script>
+
+
+
+
+
+{% endblock %}
+

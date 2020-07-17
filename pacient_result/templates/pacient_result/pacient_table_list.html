@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Пациенты</h1>
+
+    <ul>
+
+    {% for person in pac %}
+      {% for pacs in user_list %}
+
+      {% if pacs.id == person.user_id_id %}
+          <li><a href="{% url 'pacient-detail' pacs.id %}">{{ pacs.first_name }} {{ pacs.last_name }}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% endfor %}
+    </ul>
+
+
+{% endblock %}

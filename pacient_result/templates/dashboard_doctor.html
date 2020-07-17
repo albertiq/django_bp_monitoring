@@ -1,0 +1,18 @@
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Личный кабинет</h1>
+
+  <p>Добро пожаловать!</p>
+
+<h2>Статистика</h2>
+
+
+  <ul>
+    <li><strong>Пациентов:</strong> {{ num_users }}</li>
+     <li><strong>Заключений:</strong> {{ recomendations }}</li>
+
+  </ul>
+
+{% endblock %}
